@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Técnico — Sims Routine Optimizer</title>
+  <style>
+    :root {
+      --primary: #302b63;
+      --secondary: #24243e;
+      --accent: #7b2ff7;
+      --text: #2d3748;
+      --bg: #f7fafc;
+      --border: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Cabeçalho Acadêmico */
+    .header {
+      border-bottom: 3px double var(--primary);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin: 0.5rem 0;
+    }
+
+    .header h2 {
+      font-size: 1.2rem;
+      color: #718096;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .meta-table td {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .meta-table td.label {
+      font-weight: bold;
+      background-color: #f8fafc;
+      width: 25%;
+    }
+
+    /* Seções */
+    h2.section-title {
+      color: var(--primary);
+      border-left: 5px solid var(--accent);
+      padding-left: 10px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      color: var(--secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    table.data-table th,
+    table.data-table td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    table.data-table th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    table.data-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .badge {
+      background-color: #e2e8f0;
+      color: #4a5568;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: monospace;
+    }
+
+    /* Listas e Destaques */
+    ul,
+    ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .alert {
+      background-color: #ebf8ff;
+      border-left: 4px solid #3182ce;
+      padding: 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1.5rem 0;
+    }
+
+    /* Código */
+    pre,
+    code {
+      font-family: Consolas, Monaco, 'Andale Mono', monospace;
+      background-color: #f1f5f9;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    code {
+      padding: 2px 6px;
+    }
+
+    pre {
+      padding: 1rem;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+
+    .footer {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #718096;
+      text-align: center;
+    }
+
+    /* Estilos de Impressão (PDF) */
+    @media print {
+      body {
+        background-color: #ffffff;
+        font-size: 11pt;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      h2.section-title {
+        margin-top: 2.5rem;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .alert {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e0;
+      }
+
+      pre,
+      code {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Cabeçalho Acadêmico -->
+    <div class="header">
+      <h2>CENTRO UNIVERSITÁRIO DO PARÁ (CESUPA)</h2>
+      <h2>CURSO DE BACHARELADO EM CIÊNCIA DA COMPUTAÇÃO</h2>
+      <h1>Sims Routine Optimizer</h1>
+      <h3>Relatório Técnico de Desenvolvimento</h3>
+
+      <table class="meta-table">
+        <tr>
+          <td class="label">Disciplina</td>
+          <td>Inteligência Artificial e Computacional (0700M8)</td>
+          <td class="label">Professor</td>
+          <td>Prof. Daniel Leal Souza</td>
+        </tr>
+        <tr>
+          <td class="label">Equipe</td>
+          <td colspan="3">
+            Andrey Lourival Andrade Garcia (24070020)<br>
+            Everton de Oliveira da Silva (Matrícula: 24070015)<br>
+            Filipe César Maciel Sucupira (Matrícula: 24070022)<br>
+            Igor Cecim Vilhena (Matrícula: 24070031)
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Turma / Semestre</td>
+          <td>CC5MA — 01/2026</td>
+          <td class="label">Repositório GitHub</td>
+          <td><a
+              href="https://github.com/andreygarcia/sims-routine-optimizer.git">andreygarcia/sims-routine-optimizer</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 1. Introdução e Problema -->
+    <h2 class="section-title">1. Descrição do Problema e Público-Alvo</h2>
+    <p>
+      O planejamento diário em sistemas de simulação complexos apresenta um desafio combinatorial clássico. No contexto
+      de <em>The Sims</em>, um indivíduo (Sim) possui necessidades biológicas e emocionais dinâmicas que decaem com o
+      tempo e devem ser supridas através da execução de atividades diárias. O problema proposto consiste em encontrar a
+      **rotina ótima de 24 horas** (dividida em 48 blocos discretos de 30 minutos) que **maximiza a felicidade**
+      acumulada do Sim ao longo do dia, mantendo suas 8 necessidades básicas sob controle e respeitando seus traços de
+      personalidade.
+    </p>
+    <p>
+      As necessidades gerenciadas são: **Fome, Energia, Diversão, Social, Higiene, Banheiro, Conforto e Ambiente**. A
+      execução de atividades gera impactos nessas necessidades (deltas positivos ou negativos) e acumula felicidade
+      imediata com base nos traços de personalidade do Sim (ex: um Sim <em>workaholic</em> extrai felicidade de
+      atividades de trabalho, enquanto um Sim <em>preguiçoso</em> é penalizado por elas).
+    </p>
+    <p>
+      **Público-Alvo:** Desenvolvedores de inteligência artificial de jogos, acadêmicos interessados em otimização
+      baseada em heurísticas evolucionárias e entusiastas de simulações de vida que buscam compreender a modelagem
+      computacional da tomada de decisão biológica.
+    </p>
+
+    <!-- 2. Requisitos -->
+    <h2 class="section-title">2. Requisitos do Sistema</h2>
+    <h3>2.1 Requisitos Funcionais</h3>
+    <ul>
+      <li>**RF-01:** Configuração de perfil e traços de personalidade do Sim (valores entre 0.0 e 1.0) via interface
+        interativa.</li>
+      <li>**RF-02:** Configuração dos hiperparâmetros do Algoritmo Genético (População, Gerações, Crossover, Mutação e
+        Elitismo) na interface gráfica.</li>
+      <li>**RF-03:** Execução do algoritmo de otimização em tempo real com exibição do progresso geração a geração.</li>
+      <li>**RF-04:** Renderização visual da rotina ótima gerada através de um **Gráfico de Gantt** interativo de 24
+        horas.</li>
+      <li>**RF-05:** Visualização do estado final das 8 necessidades do Sim através de gráficos de barras e de radar
+        comparativo.</li>
+      <li>**RF-06:** Exportação dos resultados da rotina em formatos padrão: CSV (tabela de horários) e Relatório HTML.
+      </li>
+      <li>**RF-07:** Execução da suíte de testes estatísticos automatizada (5 sementes independentes para 4 perfis
+        pré-definidos) diretamente no painel web.</li>
+    </ul>
+
+    <h3>2.2 Requisitos Não-Funcionais</h3>
+    <ul>
+      <li>**RNF-01 (Performance):** A otimização heurística completa para os parâmetros padrão deve executar em **menos
+        de 2.0 segundos**, garantindo interatividade.</li>
+      <li>**RNF-02 (Usabilidade):** Interface gráfica responsiva, intuitiva e moderna usando Streamlit e gráficos
+        interativos Plotly.</li>
+      <li>**RNF-03 (Consistência):** Todas as rotinas diárias geradas devem passar por um filtro de consistência
+        mecânica (reparo de cromossomo).</li>
+    </ul>
+
+    <!-- Page Break para o relatório físico -->
+    <div class="page-break"></div>
+
+    <!-- 3. Formulação da Otimização -->
+    <h2 class="section-title">3. Formulação Matemática e Modelagem</h2>
+    <p>
+      O espaço de busca do problema é combinatorial. Com 20 atividades disponíveis e 48 blocos de 30 minutos a
+      preencher, o número de combinações possíveis é dado por $20^{48} \approx 2.81 \times 10^{62}$, tornando uma busca
+      exaustiva impossível em tempo computacional razoável.
+    </p>
+
+    <h3>3.1 Variáveis de Decisão e Cromossomo</h3>
+    <p>
+      O cromossomo é representado como um vetor unidimensional de strings $C = [g_0, g_1, \dots, g_{47}]$, onde cada
+      gene $g_i$ representa a atividade alocada no bloco $i$ ($30\text{ min}$). O domínio de cada gene é o conjunto de
+      atividades catalogadas $\mathcal{A}$.
+    </p>
+
+    <h3>3.2 Restrições e Reparo</h3>
+    <p>
+      Atividades têm requisitos de duração mínima. Por exemplo, <code>dormir</code> necessita de 16 blocos consecutivos
+      ($8\text{ h}$). Para evitar rotinas logicamente inviáveis, o operador de **Reparo de Consistência** varre o
+      cromossomo e força que blocos que iniciem atividades de duração $D$ ocupem exatamente os $D$ blocos consecutivos
+      no vetor final. Lacunas são preenchidas por atividades curtas automáticas (<code>lanche_rapido</code>).
+    </p>
+
+    <h3>3.3 Função de Aptidão (Fitness)</h3>
+    <p>
+      A função objetivo a ser maximizada é definida por:
+      $$\text{Fitness} = \max\left(0, \sum_{b=0}^{47} \left(H_b(T) \cdot W_b\right) + B_{\text{div}} - P_{\text{urg}} -
+      P_{\text{crit}} - P_{\text{est}} + (10 \cdot F_{\text{happy}})\right)$$
+      Onde:
+    <ul>
+      <li>$H_b(T)$ é a felicidade gerada pela atividade no bloco $b$, modificada linearmente pelos traços de
+        personalidade $T$ do Sim.</li>
+      <li>$W_b \in [0.1, 1.0]$ é o **Multiplicador de Bem-Estar**, que penaliza e reduz a felicidade ganha em atividades
+        caso o Sim esteja com necessidades básicas (energia, fome, higiene, banheiro) negativas durante aquele bloco.
+      </li>
+      <li>$B_{\text{div}}$ é o **Bônus de Diversidade**, proporcional ao número de categorias diferentes de atividades
+        executadas no dia, incentivando rotinas equilibradas.</li>
+      <li>$P_{\text{urg}}$ são as **Penalidades por Necessidade Urgente**, aplicadas caso fome, energia ou bexiga caiam
+        abaixo de $-30.0$.</li>
+      <li>$P_{\text{crit}}$ é a **Penalidade por Necessidade Crítica**, aplicada se alguma das necessidades biológicas
+        cair abaixo de $-50.0$ no encerramento da simulação.</li>
+      <li>$P_{\text{est}}$ representa **Penalidades Estruturais**, aplicadas severamente se a rotina omitir sono
+        (<code>-100</code>), alimentação (<code>-75</code>), banheiro (<code>-40</code>) ou banho (<code>-20</code>).
+      </li>
+      <li>$F_{\text{happy}} \in [0, 100]$ é a **Felicidade Média Diária**, que é adicionada com peso multiplicador de
+        10.0 (escala de 0 a 1000) para servir como guia primário de otimização, alinhando de forma estrita a aptidão com
+        o bem-estar do Sim.</li>
+    </ul>
+    </p>
+    <p>
+      **Diferença entre Fitness e Felicidade:** Enquanto o <em>Fitness</em> é o valor acumulado irrestrito da função
+      objetivo que o AG/PSO maximiza (agora na escala de 0 a ~1800 devido à adição do termo de felicidade multiplicada),
+      a **Felicidade Média** é uma métrica normalizada de 0% a 100% que reflete a média simples do nível de satisfação
+      das necessidades ao longo do dia.
+    </p>
+
+    <!-- 4. Algoritmo Genético -->
+    <h2 class="section-title">4. Especificações do Motor Evolutivo</h2>
+    <p>
+      O motor evolutivo foi implementado do zero em Python estruturado, composto pelos seguintes operadores:
+    </p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Operador</th>
+          <th>Tipo Implementado</th>
+          <th>Descrição Técnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>**Seleção**</td>
+          <td>Torneio Binário ($k=3$)</td>
+          <td>Seleciona 3 indivíduos aleatórios da população e escolhe o de melhor fitness. Apresenta excelente balanço
+            de pressão seletiva.</td>
+        </tr>
+        <tr>
+          <td>**Crossover**</td>
+          <td>Crossover de Um Ponto</td>
+          <td>Corta os pais em um ponto randômico, recombina-os e aplica o filtro de reparo nos filhos resultantes.</td>
+        </tr>
+        <tr>
+          <td>**Mutação**</td>
+          <td>Mutação por Bloco</td>
+          <td>Sorteia um bloco do cromossomo com probabilidade de mutação definida e o substitui por uma nova atividade,
+            seguido por reparo de consistência.</td>
+        </tr>
+        <tr>
+          <td>**Elitismo**</td>
+          <td>Preservação de $N=2$</td>
+          <td>Copia diretamente os 2 melhores indivíduos da geração anterior para a nova, impedindo a perda de ótimos
+            globais provisórios.</td>
+        </tr>
+        <tr>
+          <td>**Critério de Parada**</td>
+          <td>Gerações Fixas ($G=150$)</td>
+          <td>Justificado pelo tempo de resposta garantido para interface web e constatação empírica de convergência
+            precoce.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 5. Resultados dos Testes -->
+    <h2 class="section-title">5. Resultados Experimentais e Validação</h2>
+    <p>
+      A validação experimental consistiu na execução de **5 rodadas independentes com sementes distintas**
+      (<code>42, 7, 123, 999, 2024</code>) usando os parâmetros padrão unificados (População: 80, Gerações: 150,
+      Crossover: 85%, Mutação: 12%). O algoritmo foi comparado com um <em>baseline</em> puramente aleatório para
+      demonstrar sua eficácia.
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Perfil Sim</th>
+          <th>Fitness AG (Média &plusmn; DP)</th>
+          <th>Fitness PSO (Média &plusmn; DP)</th>
+          <th>Fitness Baseline (Média)</th>
+          <th>Felicidade Média (AG / PSO)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Workaholic</strong></td>
+          <td>1304.14 &plusmn; 25.70</td>
+          <td>1305.28 &plusmn; 9.02</td>
+          <td>0.00</td>
+          <td>63.7% / 63.6%</td>
+        </tr>
+        <tr>
+          <td><strong>Social</strong></td>
+          <td>1819.04 &plusmn; 45.80</td>
+          <td>1802.37 &plusmn; 63.91</td>
+          <td>0.00</td>
+          <td>62.9% / 63.6%</td>
+        </tr>
+        <tr>
+          <td><strong>Criativo</strong></td>
+          <td>1333.76 &plusmn; 18.46</td>
+          <td>1338.19 &plusmn; 10.35</td>
+          <td>0.00</td>
+          <td>64.0% / 64.1%</td>
+        </tr>
+        <tr>
+          <td><strong>Equilibrado</strong></td>
+          <td>1470.23 &plusmn; 21.24</td>
+          <td>1487.77 &plusmn; 14.74</td>
+          <td>0.00</td>
+          <td>64.3% / 63.3%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      **Análise Quantitativa:** Tanto o AG quanto o PSO obtiveram melhorias de felicidade média consistentes e robustas
+      na faixa de **+28% a +33%** em relação ao baseline aleatório. As baixas taxas de desvio-padrão de aptidão
+      (*fitness*) e a forte convergência comprovam que os algoritmos são estáveis e caminham de mãos dadas com a
+      felicidade do Sim.
+    </p>
+
+    <!-- 6. Arquitetura do Software -->
+    <h2 class="section-title">6. Arquitetura da Solução</h2>
+    <p>
+      O sistema foi desenhado de forma modular para promover separação de preocupações (Separation of Concerns):
+    </p>
+    <ul>
+      <li><code>app.py</code>: Interface Streamlit principal na raiz do repositório, controladora de estado e renderização visual.</li>
+      <li><code>src/genetic_algorithm.py</code>: Estrutura lógica do AG (crossover, mutação, seleção, motor evolutivo).</li>
+      <li><code>src/pso.py</code>: Motor de busca e inteligência coletiva do Enxame de Partículas.</li>
+      <li><code>src/fitness.py</code>: Motor de simulação de necessidades biológicas e cálculo de pontuação de aptidão.</li>
+      <li><code>src/sim.py</code>: Estrutura de dados que define o Sim e seus traços.</li>
+      <li><code>src/activities.py</code>: Catálogo das 20 atividades disponíveis e seus impactos biológicos.</li>
+      <li><code>src/export.py</code>: Formatadores de dados para saída CSV e geração de relatórios HTML.</li>
+    </ul>
+
+    <!-- 7. Limitações e Conclusões -->
+    <h2 class="section-title">7. Limitações e Conclusões</h2>
+    <p>
+      **Limitações:** O simulador biológico adota um estado inicial zerado para todas as necessidades, o que pode
+      diferir de simulações reais onde Sims acordam com necessidades parciais. Além disso, as atividades multi-bloco não
+      podem ser suspensas temporariamente para satisfazer uma necessidade urgente repentina.
+    </p>
+    <p>
+      **Conclusão:** Ambos os algoritmos de otimização (Algoritmo Genético e Enxame de Partículas) provaram ser
+      altamente eficazes para a resolução do problema combinatorial de programação de rotinas diárias, atingindo tempos
+      de resposta na casa de frações de segundo e taxas de melhoria extraordinárias sobre o baseline aleatório. O PSO
+      demonstrou excelentes resultados para perfis com foco em rotinas de hábitos individuais, enquanto o AG obteve
+      maior estabilidade com menor desvio padrão em rotinas de maior dinamismo social.
+    </p>
+
+    <!-- 8. Declaração de Uso de IA -->
+    <h2 class="section-title">8. Declaração de Uso de IA Generativa</h2>
+    <p>
+      O projeto utilizou a ferramenta **Claude (Anthropic)** para a estruturação inicial da arquitetura, geração
+      automática de esqueleto de classes, e elaboração do escopo de testes estatísticos. O grupo realizou revisão
+      crítica completa de todas as equações matemáticas, depurou problemas de concorrência com o Streamlit, adaptou a
+      lógica de reparo de cromossomo à regra de blocos mínimos e refinou o layout visual final do dashboard.
+    </p>
+
+    <!-- 9. Referências -->
+    <h2 class="section-title">9. Referências Bibliográficas</h2>
+    <ol>
+      <li>MITCHELL, Melanie. <em>An Introduction to Genetic Algorithms</em>. MIT Press, 1998.</li>
+      <li>HOLLAND, John H. <em>Adaptation in Natural and Artificial Systems</em>. MIT Press, 1992.</li>
+      <li>THE SIMS WIKI. <em>Needs Mechanics</em>. Disponível em: <a
+          href="https://sims.fandom.com/wiki/Needs">https://sims.fandom.com/wiki/Needs</a>. Acesso em Junho de 2026.
+      </li>
+    </ol>
+
+    <div class="footer">
+      Sims Routine Optimizer — Projeto Acadêmico — CESUPA 2026
+    </div>
+  </div>
+</body>
+
+</html>
