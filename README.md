@@ -62,7 +62,7 @@ Dado um Sim com **traços de personalidade** (workaholic, introvertido, extrover
 ### Instalação
 
 ```bash
-git clone https://github.com/andreygarcia/sims-routine-optimizer.git
+git clone https://github.com/1drey2drey3drey/sims-routine-optimizer.git
 cd sims-routine-optimizer
 pip install -r requirements.txt
 ```
